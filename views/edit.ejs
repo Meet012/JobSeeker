@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Page</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <%- include('./components/navbar.ejs') %>
+  <% jobs.forEach(function(job) { %>
+    <div class="container mt-5">
+      <h2>Edit Job Details</h2>
+      <form method="post" action="/job/edit/<%= job._id %>">
+        <div class="form-group">
+          <label for="companyName">Company Name:</label>
+          <input type="text" class="form-control" id="companyName" name="company" value="<%= job.company %>">
+        </div>
+        <div class="form-group">
+          <label for="jobTitle">Job Title:</label>
+          <input type="text" class="form-control" id="jobTitle" name="position" value="<%= job.position %>">
+        </div>
+        <div class="form-group">
+          <label for="numberOfOpenings">Number of Openings:</label>
+          <input type="number" class="form-control" id="numberOfOpenings" name="opening" value="<%= job.opening %>">
+        </div>
+        <div class="form-group">
+          <label for="Salary">Minimum Salary</label>
+          <input type="number" class="form-control" id="Salary" name="minSalary" value="<%= job.minSalary %>">
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea class="form-control" id="description" name="description"><%= job.description %></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="status">Status:</label>
+          <select class="form-control" id="status" name="role">
+            <option value="pending" <% if (job.status === 'pending') { %> selected <% } %>>Pending</option>
+            <option value="interviewed" <% if (job.status === 'interviewed') { %> selected <% } %>>Interviewed</option>
+            <option value="declined" <% if (job.status === 'declined') { %> selected <% } %>>Declined</option>
+        </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  <% }); %>
+
+  <!-- Footer -->
+  <%- include('./components/footer.ejs') %> 
+
+  <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

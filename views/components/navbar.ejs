@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="/">Jobs</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active text-white" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/all-jobs">All Jobs</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <% if (locals.user) { %>
+              <%= locals.user.username %> 
+            <% }else{ %>
+              Anonymous
+              <% } %>
+          </a>
+          <ul class="dropdown-menu">
+              <% if (!locals.user) { %>
+                  <li><a class="dropdown-item" href="/login">login</a></li>
+                  <li><a class="dropdown-item" href="/signUp">SignUp</a></li>
+              <% } %>
+            <% if (locals.user) { %>
+              <li><a class="dropdown-item" href="/user/logout">Logout</a></li> 
+            <% } %>
+          </ul>
+        </li>
+
+        <!-- For only job creator -->
+        <% if (locals.user && locals.user.role === "Jober") { %>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/job/portal/<%= locals.user._id %>">Admin</a>
+          </li>
+        <% } %>
+        <!--  End of for job creator-->
+
+
+        <!-- For only job applier -->
+        <% if (locals.user && locals.user.role === "User") { %>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/apply/user/<%= locals.user._id %>">Applied</a>
+          </li>
+        <% } %>
+        <!--  End of for job applier-->
+      
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <body>
+    <%- include('./components/navbar.ejs') %>
+    <div class="d-flex justify-content-center mb-3">
+        <a href="/job/create-job" class="btn btn-secondary">Create Job</a>
+    </div>
+    <% if (jobs.length === 0) { %>
+      <div class="container">
+        <div class="text-center">
+            <h1>No Jobs</h1>
+        </div>
+    </div>
+    <% }else{ %>
+      <div class="container">
+        <% jobs.forEach(j => { %>
+          <div class="row">
+              <div class="col">
+                  <div class="card mb-3">
+                      <div class="card-body">
+                          <h5 class="card-title">
+                          <%= j.company %>  
+                          </h5>
+                          <h6 class="card-subtitle mb-2 text-muted"><%= j.position %></h6>
+                          <p class="card-text">Salary: $<%= j.minSalary %></p>
+                          <p class="card-text">Number Of Opening: $<%= j.opening %></p>
+                          <a href="/job/edit/<%= j._id %>" class="btn btn-primary">Edit</a>
+                          <a href="/job/delete/<%= j._id %>" class="btn btn-danger">Delete</a>
+                          <a href="/job/applicants/<%= j._id %>" class="btn btn-primary">View Applicants</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        <% }) %>
+    <% } %>
+  </div>
+  <!-- Footer -->
+  <%- include('./components/footer.ejs') %> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

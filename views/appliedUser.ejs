@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Applied Jobs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .job-card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <%- include('./components/navbar.ejs') %>
+    <div class="container mt-4">
+        <% if (user) { %>
+            <h2>Welcome, <%= user.username %>!</h2>
+            <h1>Applied Jobs</h1>
+        <% if (applied.length === 0) { %>
+            <p>No jobs applied</p>
+        <% } else { %>
+            <% applied.forEach(application => { %>
+                <div class="card mb-3 job-card">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= application.position %> at <%= application.company %></h5>
+                        <p class="card-text">Applied on: <%= application.appliedDate.toDateString() %></p>
+                        <a href="/apply/deleteApplicant/<%= application._id %>" class="btn btn-danger">Revoke</a>
+                    </div>
+                </div>
+            <% }); %>
+        <% } %>
+        <% }else{  %>
+          <h1>Not Logged IN please log in at <a href="/login">Login Here</a></h1>
+        <% } %>
+        
+    </div>
+
+    <!-- Footer -->
+    <%- include('./components/footer.ejs') %> 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
