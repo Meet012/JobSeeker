@@ -1,6 +1,7 @@
 const express = require('express');
 const Job = require('../models/job');
 const router = express.Router();
+const application = require('../models/application');
 const { createCustomError } = require('../error/customError');
 
 router.get('/', (req, res) => {
@@ -30,7 +31,12 @@ router.get('/signUp', (req, res) => {
 router.get('/all-jobs', async (req, res, next) => {
     try {
         const jobs = await Job.find({});
-        res.render('allJobs', { jobs, user: req.user });
+        const userId = req.user._id;
+        const a = await application.find({appliedBy:userId});
+        console.log(a);
+        console.log(userId);
+        
+        res.render('allJobs', { jobs, user: req.user,applied:a });
     } catch (error) {
         next(error);
     }

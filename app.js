@@ -35,7 +35,7 @@ const connect = require('./middleware/connect');
 // Setting the routes
 app.use('/user',userRoute);
 app.use('/job',restrictToLoginUserOnly,jobRoute);
-app.use('/apply',applyRoute);
+app.use('/apply',restrictToLoginUserOnly,applyRoute);
 app.use('/',staticRoute);
 
 app.use(notFoundMiddleware);

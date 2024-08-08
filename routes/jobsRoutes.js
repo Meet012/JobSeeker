@@ -52,23 +52,23 @@ router.delete('/delete/:id', async (req, res, next) => {
 
 router.get('/edit/:id', async (req, res, next) => {
     try {
-        const jobId = req.params.id;
-        const job = await Job.findOne({ _id: jobId, createdBy: req.user._id });
-        res.render('edit', { job, user: req.user });
+        const i =req.params.id;
+        const j = await Job.find({_id:i,createdBy:req.user._id});
+        return res.render('edit',{jobs:j,user:req.user});
     } catch (error) {
+        console.log(error);
         next(error);
     }
 });
 
 router.get('/applicants/:id', async (req, res, next) => {
     try {
-        const jobId = req.params.id;
-        const job = await Job.findById(jobId);
-        if (req.user._id.toString() !== job.createdBy.toString()) {
-            return next(createCustomError('Unauthorized', 401));
+        const j = await Job.find({_id:req.params.id});
+        if(req.user.id === j.createdBy){
+            console.log('same');
         }
-        const applicants = await Application.find({ job: jobId });
-        res.render('applicants', { applicants, user: req.user });
+        const a = await Application.find({job:req.params.id});
+        res.render('applicants',{applicants:a,user:req.user});
     } catch (error) {
         next(error);
     }
